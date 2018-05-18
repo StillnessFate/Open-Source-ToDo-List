@@ -10,6 +10,13 @@ todo_list_columns = [
     ("finished", "INTEGER NOT NULL")
 ]
 
+category_table_name = "category"
+
+category_columns = [
+    ("id", "INTEGER PRIMARY KEY AUTOINCREMENT"),
+    ("name", "TEXT NOT NULL")
+]
+
 class TodoListDB():
 
     def __init__(self, file="todolist.db"):
@@ -17,9 +24,15 @@ class TodoListDB():
         self.cur = self.conn.cursor()
 
         self.create_table(todo_list_table_name, todo_list_columns)
+        self.create_table(category_table_name, category_columns)
 
     # TODO ==============================
-    def add_todo(self, what, due, category):
+    def add_todo(self, what, due, category=""):
+        check_todo = not self.get_todo("what='" + what + "'")
+        check_category = (not category) or self.get_category("name='" + category + "'")
+        if (not check_todo) or (not check_category):
+            return False
+
         query = (
             "INSERT INTO {0} (what, due, category, finished) VALUES"
             "('{1}', '{2}', '{3}', '{4}');"
@@ -33,6 +46,7 @@ class TodoListDB():
 
         self.cur.execute(query)
         self.conn.commit()
+        return True
 
     def remove_todo(self, where_exp):
         self.remove_row(todo_list_table_name, where_exp)
@@ -42,6 +56,26 @@ class TodoListDB():
 
     def get_todo(self, where_exp="1"):
         return self.get_row(todo_list_table_name, where_exp)
+
+    def add_category(self, name):
+        check_category = not self.get_category("name='" + name + "'")
+        if not check_category:
+            return False
+
+        query = ("INSERT INTO {0} (name) VALUES ('{1}');").format(
+            category_table_name,
+            name
+        )
+
+        self.cur.execute(query)
+        self.conn.commit()
+        return True
+
+    def remove_category(self, where_exp):
+        self.remove_row(category_table_name, where_exp)
+
+    def get_category(self, where_exp="1"):
+        return self.get_row(category_table_name, where_exp)
 
     # DB(don't care) ==============================
     def create_table(self, name, columns):
