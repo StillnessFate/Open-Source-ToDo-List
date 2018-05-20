@@ -193,10 +193,39 @@ def modify_contents():
 
 def finished():
     # Mark as finished or not finished
-    rec_id = input("")
+    print("Input record id that you want to mark as finished/not finished.")
+    list_all()
+    rec_id = input("Record id : ")
+    print("1. Finished\n2. Not finished\n")
+    ans = input(" >>> ")
+    if ans == "1":
+        modifys = (("finished", "1"))
+        db.modify_todo(modifys, "id = " + rec_id)
+
+    elif ans == "2":
+        modifys = (("finished", "0"))
+        db.modify_todo(modifys, "id = " + rec_id)
+
+    else:
+        print("Please select a proper option.")
 
 def delete_todo():
     # Delete a certain todo list
+    print("Input record id that you want to delete")
+    list_all()
+    rec_id = input("Record id : ")
+    while True:
+        ans = input("Are you sure ? (Y/N) : ")
+        if ans == "y" or ans == "Y":
+            db.remove_todo("id = " + rec_id)
+            print("Deleted.")
+            break
+        elif ans == "n" or ans == "N":
+            print("Aborted!")
+            break
+        else:
+            pass
+
 
 ###############################################
 
