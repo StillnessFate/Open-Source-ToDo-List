@@ -9,7 +9,7 @@ columns = ("id", "할일", "기한", "카테고리", "완료")
 def main_menu():
     while True:
         print("Choose an option.")
-        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n\n>>> ")
+        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n\n >>> ")
 
         if ans == "1":
             # Add todo
@@ -27,7 +27,7 @@ def main_menu():
             # Quit
             break
         else:
-            print("Please select a proper option.")
+            print("Please select a proper option.\n")
 
 ########## Main menu functions ##########
 
@@ -37,14 +37,14 @@ def add_todo():
     b = input("Due date : ")
     print("Choose a category")
     list_category()
-    cat = input(">>> ") # This line needs to be fixed. (#1) safety coding
+    cat = input(" >>> ") # This line needs to be fixed. (#1) safety coding
     db.add_todo(a, b, cat)
 
 def list_todo():
     # List todo list
     while True:
         print("Choose a listing option.\n")
-        ans = input(" 1. Just list them all\n 2. Category options\n 3. Back to main menu\n\n>>> ")
+        ans = input(" 1. Just list them all\n 2. Category options\n 3. Back to main menu\n\n >>> ")
 
         if ans == "1":
             # List them all
@@ -73,14 +73,14 @@ def list_todo():
                     break
                 
                 else:
-                    print("Please select a proper option.")
+                    print("Please select a proper option.\n")
 
         elif ans == "3":
             # Back to main menu
             break
 
         else:
-            print("Please choose a proper option.")
+            print("Please choose a proper option.\n")
 
 def modify_todo():
     # Modify todo list
@@ -105,7 +105,7 @@ def modify_todo():
             break
         
         else:
-            print("Please select a proper option.")
+            print("Please select a proper option.\n")
 
 def list_all():
     # List all To-dos here
@@ -126,14 +126,24 @@ def add_category():
 def del_category():
     # Delete a category
     list_category()
-    category = input("Please enter a category name that you want to delete. : ")
-    db.remove_category(category)
-    # This needs to be safely coded.
+    print("Input category id that you want to delete.")
+    rec_id = input(" >>> ")
+    while True:
+        ans = input("Are you sure ? (Y/N) : ")
+        if ans == "y" or ans == "Y":
+            db.remove_category("id=" + rec_id)
+            print("Deleted.")
+            break
+        elif ans == "n" or ans == "N":
+            print("Aborted!")
+            break
+        else:
+            pass
 
 def list_category():
     # List existing categories
     # Additional changes could be made here. (ex:Print pretty)
-    columns = ("","카테고리")
+    columns = ("ID","카테고리")
     todo = db.get_row("category")
     print_table(columns, todo, 10)
 
@@ -152,37 +162,37 @@ def modify_contents():
         
         if what == "" and (due != "" and cat != ""): # a b' c'
             modifys = (("due", due), ("category", cat))
-            db.modify_todo(modifys, "id = " + rec_id)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif due == "" and (what != "" and cat != ""): # b a' c'
             modifys = (("what", what), ("category", cat))
-            db.modify_todo(modifys, "id = " + rec_id)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif cat == "" and (what != "" and due != ""): # c a' b'
             modifys = (("what", what), ("category", cat))
-            db.modify_todo(modifys, "id = " + rec_id)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif what != "" and (due == "" and cat == ""): # a' b c 
-            modifys = (("what", what))
-            db.modify_todo(modifys, "id = " + rec_id)
+            modifys = (("what", what),)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif due != "" and (what == "" and cat == ""): # b' a c
-            modifys = (("due", due))
-            db.modify_todo(modifys, "id = " + rec_id)
+            modifys = (("due", due),)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif cat != "" and (what == "" and due == ""): # c' a b 
-            modifys = (("category", cat))
-            db.modify_todo(modifys, "id = " + rec_id)
+            modifys = (("category", cat),)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         elif what != "" and due != "" and cat != "": # a' b' c'
             modifys = (("what", what), ("due", due), ("category", cat))
-            db.modify_todo(modifys, "id = " + rec_id)
+            db.modify_todo(modifys, "id=" + rec_id)
 
         else: # a b c
             print("You have to fill in something...")
             
     else:
-        print("Please input a proper record id.")
+        print("Please input a proper record id.\n")
         # Additional safety coding needed.
 
 def finished():
@@ -193,15 +203,15 @@ def finished():
     print("1. Finished\n2. Not finished\n")
     ans = input(" >>> ")
     if ans == "1":
-        modifys = (("finished", "1"))
+        modifys = (("finished", "1"),)
         db.modify_todo(modifys, "id = " + rec_id)
 
     elif ans == "2":
-        modifys = (("finished", "0"))
+        modifys = (("finished", "0"),)
         db.modify_todo(modifys, "id = " + rec_id)
 
     else:
-        print("Please select a proper option.")
+        print("Please select a proper option.\n")
 
 def delete_todo():
     # Delete a certain todo list
@@ -211,7 +221,7 @@ def delete_todo():
     while True:
         ans = input("Are you sure ? (Y/N) : ")
         if ans == "y" or ans == "Y":
-            db.remove_todo("id = " + rec_id)
+            db.remove_todo("id=" + rec_id)
             print("Deleted.")
             break
         elif ans == "n" or ans == "N":
