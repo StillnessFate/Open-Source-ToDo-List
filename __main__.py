@@ -1,4 +1,4 @@
-import todolistdb
+from todolistdb import TodoListDB
 
 db = TodoListDB()
 db.remove_todo("1")
