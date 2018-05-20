@@ -109,6 +109,7 @@ def modify_todo():
 
 def list_all():
     # List all To-dos here
+    columns = ("id", "할일", "기한", "카테고리", "완료")
     todo = db.get_todo()
     print_table(columns, todo, 10)
 
@@ -153,6 +154,7 @@ def list_category():
 
 def modify_contents():
     # Modify contents
+    list_all()
     rec_id = input("Input record id : ")
     if rec_id.isdigit():
         print("You can just press ENTER if you want to skip certain item.")
@@ -169,10 +171,10 @@ def modify_contents():
             db.modify_todo(modifys, "id=" + rec_id)
 
         elif cat == "" and (what != "" and due != ""): # c a' b'
-            modifys = (("what", what), ("category", cat))
+            modifys = (("what", what), ("due", due))
             db.modify_todo(modifys, "id=" + rec_id)
 
-        elif what != "" and (due == "" and cat == ""): # a' b c 
+        elif what != "" and (due == "" and cat == ""): # a' b c
             modifys = (("what", what),)
             db.modify_todo(modifys, "id=" + rec_id)
 
@@ -180,7 +182,7 @@ def modify_contents():
             modifys = (("due", due),)
             db.modify_todo(modifys, "id=" + rec_id)
 
-        elif cat != "" and (what == "" and due == ""): # c' a b 
+        elif cat != "" and (what == "" and due == ""): # c' a b
             modifys = (("category", cat),)
             db.modify_todo(modifys, "id=" + rec_id)
 
