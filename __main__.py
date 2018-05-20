@@ -1,8 +1,6 @@
 from todolistdb import TodoListDB
 
 db = TodoListDB()
-db.remove_todo("1")
-db.remove_category("1")
 db.add_category("생활")
 db.add_category("개발")
 
@@ -11,7 +9,7 @@ columns = ("id", "할일", "기한", "카테고리", "완료")
 def main_menu():
     while True:
         print("Choose an option.")
-        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n>>> ")
+        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n\n>>> ")
 
         if ans == "1":
             # Add todo
@@ -45,8 +43,8 @@ def add_todo():
 def list_todo():
     # List todo list
     while True:
-        print("Choose a listing option.")
-        ans = input(" 1. Just list them all\n 2. Category options\n 3. Back to main menu\n>>> ")
+        print("Choose a listing option.\n")
+        ans = input(" 1. Just list them all\n 2. Category options\n 3. Back to main menu\n\n>>> ")
 
         if ans == "1":
             # List them all
@@ -55,8 +53,8 @@ def list_todo():
         elif ans == "2":
             # Category options
             while True:
-                print("###Category options###")
-                opt = input(" 1. Add new category\n 2. Delete category\n 3. List category\n 4. Back to listing options\n>>> ")
+                print("\n###Category options###")
+                opt = input(" 1. Add new category\n 2. Delete category\n 3. List category\n 4. Back to listing options\n\n>>> ")
 
                 if opt == "1":
                     # Add new category
@@ -86,12 +84,9 @@ def list_todo():
 
 def modify_todo():
     # Modify todo list
-    
-    rec_id = int(input("Record id : "))
-    what = input("Todo")
     while True:
         print("Modify options")
-        ans = input(" 1. Modify contents\n 2. Mark as finished/not finished\n 3. Delete todo\n 4. Back to previous menu\n>>> ")
+        ans = input(" 1. Modify contents\n 2. Mark as finished/not finished\n 3. Delete todo\n 4. Back to previous menu\n\n >>> ")
 
         if ans == "1":
             # Modify contents
@@ -138,9 +133,8 @@ def del_category():
 def list_category():
     # List existing categories
     # Additional changes could be made here. (ex:Print pretty)
-    # Not implemented
-    columns = ("", "할일", "", "", "")
-    todo = db.get_todo()
+    columns = ("","카테고리")
+    todo = db.get_row("category")
     print_table(columns, todo, 10)
 
 ########################################
@@ -317,3 +311,5 @@ def get_print_width(s):
     return (print_width, len, wide_num)
 
 #####################################
+
+main_menu()
