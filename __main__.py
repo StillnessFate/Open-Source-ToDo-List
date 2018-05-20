@@ -35,10 +35,14 @@ def add_todo():
     # Add todo list
     a = input("Todo : ")
     b = input("Due date : ")
-    print("Choose a category")
+    print("Choose a category by id")
     list_category()
     cat = input(" >>> ") # This line needs to be fixed. (#1) safety coding
-    db.add_todo(a, b, cat)
+    if cat != "":
+        category_string = id_to_category(cat)
+        db.add_todo(a, b, category_string)
+    else:
+        db.add_todo(a, b, cat)
 
 def list_todo():
     # List todo list
@@ -148,6 +152,18 @@ def list_category():
     todo = db.get_row("category")
     print_table(columns, todo, 10)
 
+def id_to_category(cat_id):
+    # Change category record id to category name(string)
+    if not cat_id.isdigit():
+        print("Incorrect input!")
+    else:
+        row = db.get_row("category")
+        for i in row:
+            if i[0] == int(cat_id):
+                return i[1]
+        print("Category id not found!\n")
+    return ""
+
 ########################################
 
 ########## Modifing option functions ##########
@@ -160,8 +176,14 @@ def modify_contents():
         print("You can just press ENTER if you want to skip certain item.")
         what = input("Input todo : ")
         due = input("Input due : ")
-        cat = input("Input category : ")
+        list_category()
         
+        cat_id = input("Input category id: ")
+        if cat_id != "":
+            cat = id_to_category(cat_id)
+        else:
+            pass
+
         if what == "" and (due != "" and cat != ""): # a b' c'
             modifys = (("due", due), ("category", cat))
             db.modify_todo(modifys, "id=" + rec_id)
