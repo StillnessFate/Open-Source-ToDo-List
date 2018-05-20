@@ -33,8 +33,18 @@ def main_menu():
 
 def add_todo():
     # Add todo list
-    a = input("Todo : ")
-    b = input("Due date : ")
+    while True:
+        a = input("Todo : ")
+        if a != "":
+            break
+        print("\nPlease enter what to do.\n")
+    
+    while True:
+        b = input("Due date : ")
+        if b != "":
+            break
+        print("\nPlease enter the due date.\n")
+
     print("Choose a category by id")
     list_category()
     cat = input(" >>> ") # This line needs to be fixed. (#1) safety coding
@@ -170,54 +180,63 @@ def id_to_category(cat_id):
 
 def modify_contents():
     # Modify contents
-    list_all()
-    rec_id = input("Input record id : ")
-    if rec_id.isdigit():
-        print("You can just press ENTER if you want to skip certain item.")
-        what = input("Input todo : ")
-        due = input("Input due : ")
-        list_category()
-        
-        cat_id = input("Input category id: ")
-        if cat_id != "":
-            cat = id_to_category(cat_id)
-        else:
-            pass
-
-        if what == "" and (due != "" and cat != ""): # a b' c'
-            modifys = (("due", due), ("category", cat))
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif due == "" and (what != "" and cat != ""): # b a' c'
-            modifys = (("what", what), ("category", cat))
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif cat == "" and (what != "" and due != ""): # c a' b'
-            modifys = (("what", what), ("due", due))
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif what != "" and (due == "" and cat == ""): # a' b c
-            modifys = (("what", what),)
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif due != "" and (what == "" and cat == ""): # b' a c
-            modifys = (("due", due),)
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif cat != "" and (what == "" and due == ""): # c' a b
-            modifys = (("category", cat),)
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        elif what != "" and due != "" and cat != "": # a' b' c'
-            modifys = (("what", what), ("due", due), ("category", cat))
-            db.modify_todo(modifys, "id=" + rec_id)
-
-        else: # a b c
-            print("You have to fill in something...")
+    while True:
+        list_all()
+        rec_id = input("Input record id : ")
+        if rec_id.isdigit():
+            print("You can just press ENTER if you want to skip certain item.")
+            what = input("Input todo : ")
+            due = input("Input due : ")
+            list_category()
             
-    else:
-        print("Please input a proper record id.\n")
-        # Additional safety coding needed.
+            cat_id = input("Input category id: ")
+            if cat_id != "":
+                cat = id_to_category(cat_id)
+            else:
+                cat = cat_id
+
+            if what == "" and (due != "" and cat != ""): # a b' c'
+                modifys = (("due", due), ("category", cat))
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif due == "" and (what != "" and cat != ""): # b a' c'
+                modifys = (("what", what), ("category", cat))
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif cat == "" and (what != "" and due != ""): # c a' b'
+                modifys = (("what", what), ("due", due))
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif what != "" and (due == "" and cat == ""): # a' b c
+                modifys = (("what", what),)
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif due != "" and (what == "" and cat == ""): # b' a c
+                modifys = (("due", due),)
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif cat != "" and (what == "" and due == ""): # c' a b
+                modifys = (("category", cat),)
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            elif what != "" and due != "" and cat != "": # a' b' c'
+                modifys = (("what", what), ("due", due), ("category", cat))
+                db.modify_todo(modifys, "id=" + rec_id)
+                print("Modified!\n")
+
+            else: # a b c
+                print("You have to fill in something...\n")
+            break
+                
+        else:
+            print("Please input a proper record id.\n")
+            # Additional safety coding needed.
 
 def finished():
     # Mark as finished or not finished
@@ -241,15 +260,21 @@ def delete_todo():
     # Delete a certain todo list
     print("Input record id that you want to delete")
     list_all()
-    rec_id = input("Record id : ")
+    while True:
+        rec_id = input("Record id : ")
+        if rec_id == "" or not rec_id.isdigit():
+            print("Please input a proper record id.")
+        else:
+            break
+    
     while True:
         ans = input("Are you sure ? (Y/N) : ")
         if ans == "y" or ans == "Y":
             db.remove_todo("id=" + rec_id)
-            print("Deleted.")
+            print("Deleted.\n")
             break
         elif ans == "n" or ans == "N":
-            print("Aborted!")
+            print("Aborted!\n")
             break
         else:
             pass
