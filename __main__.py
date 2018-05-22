@@ -58,13 +58,17 @@ def list_todo():
     # List todo list
     while True:
         print("Choose a listing option.\n")
-        ans = input(" 1. Just list them all\n 2. Category options\n 3. Back to main menu\n\n >>> ")
+        ans = input(" 1. Just list them all\n 2. List todo by category\n 3. Category options\n 4. Back to main menu\n\n >>> ")
 
         if ans == "1":
             # List them all
             list_all()
 
         elif ans == "2":
+            # List todo by category
+            list_by_category()
+
+        elif ans == "3":
             # Category options
             while True:
                 print("\n###Category options###")
@@ -89,7 +93,7 @@ def list_todo():
                 else:
                     print("Please select a proper option.\n")
 
-        elif ans == "3":
+        elif ans == "4":
             # Back to main menu
             break
 
@@ -173,6 +177,21 @@ def id_to_category(cat_id):
                 return i[1]
         print("Category id not found!\n")
     return ""
+
+def list_by_category():
+    # List todo by category
+    while True:
+        list_category()
+        cat_id = input("Please input category id : ")
+        if not cat_id.isdigit():
+            print("Please input proper category id.")
+        else:
+            cat = id_to_category(cat_id)
+            break
+    
+    columns = ("id", "할일", "기한", "카테고리", "완료")
+    todo = db.get_todo("category=" + "'" + cat + "'")
+    print_table(columns, todo, 10)
 
 ########################################
 
