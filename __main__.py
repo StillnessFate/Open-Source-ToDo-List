@@ -183,7 +183,7 @@ def list_by_category():
     while True:
         list_category()
         cat_id = input("Please input category id : ")
-        if not cat_id.isdigit():
+        if not cat_id_exist_bool(cat_id):
             print("Please input proper category id.")
         else:
             cat = id_to_category(cat_id)
@@ -192,6 +192,18 @@ def list_by_category():
     columns = ("id", "할일", "기한", "카테고리", "완료")
     todo = db.get_todo("category=" + "'" + cat + "'")
     print_table(columns, todo, 10)
+
+def cat_id_exist_bool(cat_id):
+    if not cat_id.isdigit():
+        print("Incorrect input!")
+    else:
+        row = db.get_row("category")
+        for i in row:
+            if i[0] == int(cat_id):
+                return True
+        return False
+    return False
+
 
 ########################################
 
@@ -202,7 +214,7 @@ def modify_contents():
     while True:
         list_all()
         rec_id = input("Input record id : ")
-        if rec_id.isdigit():
+        if cat_id_exist_bool(rec_id):
             print("You can just press ENTER if you want to skip certain item.")
             what = input("Input todo : ")
             due = input("Input due : ")
