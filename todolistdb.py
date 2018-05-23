@@ -1,8 +1,8 @@
 import sqlite3
 
-todo_list_table_name = "todo_list"
+TODO_LIST_TABLE_NAME = "todo_list"
 
-todo_list_columns = [
+TODO_LIST_COLUMNS = [
     ("id", "INTEGER PRIMARY KEY AUTOINCREMENT"),
     ("what", "TEXT NOT NULL"),
     ("due", "TEXT NOT NULL"),
@@ -10,9 +10,9 @@ todo_list_columns = [
     ("finished", "INTEGER NOT NULL")
 ]
 
-category_table_name = "category"
+CATEGORY_TABLE_NAME = "category"
 
-category_columns = [
+CATEGORY_COLUMNS = [
     ("id", "INTEGER PRIMARY KEY AUTOINCREMENT"),
     ("name", "TEXT NOT NULL")
 ]
@@ -23,8 +23,8 @@ class TodoListDB():
         self.conn = sqlite3.connect(file)
         self.cur = self.conn.cursor()
 
-        self.create_table(todo_list_table_name, todo_list_columns)
-        self.create_table(category_table_name, category_columns)
+        self.create_table(TODO_LIST_TABLE_NAME, TODO_LIST_COLUMNS)
+        self.create_table(CATEGORY_TABLE_NAME, CATEGORY_COLUMNS)
 
     # TODO ==============================
     def add_todo(self, what, due, category=""):
@@ -37,7 +37,7 @@ class TodoListDB():
             "INSERT INTO {0} (what, due, category, finished) VALUES"
             "('{1}', '{2}', '{3}', '{4}');"
         ).format(
-            todo_list_table_name,
+            TODO_LIST_TABLE_NAME,
             what,
             due,
             category,
@@ -49,13 +49,13 @@ class TodoListDB():
         return True
 
     def remove_todo(self, where_exp):
-        self.remove_row(todo_list_table_name, where_exp)
+        self.remove_row(TODO_LIST_TABLE_NAME, where_exp)
 
     def modify_todo(self, modifys, where_exp):
-        self.modify_row(todo_list_table_name, modifys, where_exp)
+        self.modify_row(TODO_LIST_TABLE_NAME, modifys, where_exp)
 
     def get_todo(self, where_exp="1"):
-        return self.get_row(todo_list_table_name, where_exp)
+        return self.get_row(TODO_LIST_TABLE_NAME, where_exp)
 
     def add_category(self, name):
         check_category = not self.get_category("name='" + name + "'")
@@ -63,7 +63,7 @@ class TodoListDB():
             return False
 
         query = ("INSERT INTO {0} (name) VALUES ('{1}');").format(
-            category_table_name,
+            CATEGORY_TABLE_NAME,
             name
         )
 
@@ -72,10 +72,10 @@ class TodoListDB():
         return True
 
     def remove_category(self, where_exp):
-        self.remove_row(category_table_name, where_exp)
+        self.remove_row(CATEGORY_TABLE_NAME, where_exp)
 
     def get_category(self, where_exp="1"):
-        return self.get_row(category_table_name, where_exp)
+        return self.get_row(CATEGORY_TABLE_NAME, where_exp)
 
     # DB(don't care) ==============================
     def create_table(self, name, columns):
