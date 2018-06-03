@@ -33,4 +33,4 @@ pip install todolist
 - **4.Quit** : Literally Quit. Close the App
 
 
-* ```todolist --version``` will print you which version is installed.
+**```todolist --version``` will print you which version is installed.**
