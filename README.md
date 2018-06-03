@@ -16,7 +16,7 @@ pip install todolist
 
 ## How to use
 
-***※ Open-Source-ToDo-List requires Python3.4 or later and SQLite3 to use***  
+***※ Open-Source-ToDo-List requires Python3.6 or later and SQLite3 to use***  
 
 * After completing the installation, type ```todolist``` in the terminal (or CMD, PowerShell)
 * When the program is executed, you can select the menu to add or delete items, and output the desired items.  
