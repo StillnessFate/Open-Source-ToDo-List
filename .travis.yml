@@ -3,5 +3,5 @@ python:
   - "3.6.5"
 cache: pip
 install:
-  - pip install Twisted
-script: pytest
+  - pip install asciimatics
+script: pytest travis_test.py
