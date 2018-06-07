@@ -167,9 +167,9 @@ def get_print_width(s):
     return (print_width, len, wide_num)
 
 
-#main()
+# main()
 
-import os
-import shutil
-print(os.get_terminal_size())
-print(shutil.get_terminal_size())
+# import os
+# import shutil
+# print(os.get_terminal_size())
+# print(shutil.get_terminal_size())
