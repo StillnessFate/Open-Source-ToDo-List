@@ -10,7 +10,7 @@ columns = ("id", "할일", "기한", "카테고리", "완료")
 def main_menu():
     while True:
         print("Choose an option.")
-        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n\n >>> ")
+        ans = input(" 1. Add todo\n 2. List todo\n 3. Modify todo\n 4. Quit\n\n>>> ")
 
         if ans == "1":
             # Add todo
@@ -48,7 +48,7 @@ def add_todo():
 
     print("Choose a category by id")
     list_category()
-    cat = input(" >>> ") # This line needs to be fixed. (#1) safety coding
+    cat = input(">>> ") # This line needs to be fixed. (#1) safety coding
     if cat != "":
         category_string = id_to_category(cat)
         db.add_todo(a, b, category_string)
@@ -59,17 +59,21 @@ def list_todo():
     # List todo list
     while True:
         print("Choose a listing option.\n")
-        ans = input(" 1. Just list them all\n 2. List todo by category\n 3. Category options\n 4. Back to main menu\n\n >>> ")
+        ans = input(" 1. Just list them all\n 2. List only finished/not finished items\n 3. List todo by category\n 4. Category options\n 5. Back to main menu\n\n>>> ")
 
         if ans == "1":
             # List them all
             list_all()
 
         elif ans == "2":
+            # Show only finished/not finished items
+            list_finished()
+
+        elif ans == "3":
             # List todo by category
             list_by_category()
 
-        elif ans == "3":
+        elif ans == "4":
             # Category options
             while True:
                 print("\n###Category options###")
@@ -94,7 +98,7 @@ def list_todo():
                 else:
                     print("Please select a proper option.\n")
 
-        elif ans == "4":
+        elif ans == "5":
             # Back to main menu
             break
 
@@ -105,7 +109,7 @@ def modify_todo():
     # Modify todo list
     while True:
         print("Modify options")
-        ans = input(" 1. Modify contents\n 2. Mark as finished/not finished\n 3. Delete todo\n 4. Back to previous menu\n\n >>> ")
+        ans = input(" 1. Modify contents\n 2. Mark as finished/not finished\n 3. Delete todo\n 4. Back to previous menu\n\n>>> ")
 
         if ans == "1":
             # Modify contents
@@ -132,6 +136,30 @@ def list_all():
     todo = db.get_todo()
     print_table(columns, todo, 10)
 
+def list_finished():
+    # Show only finished/not finised todo
+    while True:
+        print("Choose an option.")
+        ans = input(" 1. List finished todos\n 2. List unfinished todos\n 3. Back to previous menu\n\n>>> ")
+
+        if ans == "1":
+            # List finished todos
+            columns = ("id", "할일", "기한", "카테고리")
+            todo = db.get_todo("finished=1")
+            print_table(columns, todo, 10)
+
+        elif ans == "2":
+            # List unfinished todos
+            columns = ("id", "할일", "기한", "카테고리")
+            todo = db.get_todo("finished=0")
+            print_table(columns, todo, 10)
+
+        elif ans == "3":
+            break
+
+        else:
+            print("Please select a proper option.\n")
+            
 ########################################
 
 ########## Category functions ##########
@@ -147,7 +175,7 @@ def del_category():
     # Delete a category
     list_category()
     print("Input category id that you want to delete.")
-    rec_id = input(" >>> ")
+    rec_id = input(">>> ")
     while True:
         ans = input("Are you sure ? (Y/N) : ")
         if ans == "y" or ans == "Y":
@@ -276,7 +304,7 @@ def finished():
     list_all()
     rec_id = input("Record id : ")
     print("1. Finished\n2. Not finished\n")
-    ans = input(" >>> ")
+    ans = input(">>> ")
     if ans == "1":
         modifys = (("finished", "1"),)
         db.modify_todo(modifys, "id = " + rec_id)
@@ -418,3 +446,5 @@ def main():
             pass
     else:
         main_menu()
+
+        
