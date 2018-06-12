@@ -1,7 +1,7 @@
 # Open-Source-ToDo-List
 *This is The Open Source CLI To Do List App*
 
-[![codecov](https://codecov.io/gh/StillnessFate/Open-Source-ToDo-List/branch/master/graph/badge.svg)](https://codecov.io/gh/StillnessFate/Open-Source-ToDo-List)
+[![codecov](https://codecov.io/gh/StillnessFate/Open-Source-ToDo-List/branch/dev/graph/badge.svg)](https://codecov.io/gh/StillnessFate/Open-Source-ToDo-List)
 
 ## Introduction
 
