@@ -6,9 +6,11 @@ python:
 cache: pip
 
 install:
+  - pip install codecov
   - pip install asciimatics
   
-script: pytest travis_test.py
+script:
+  - coverage run tests.py
 
 after_success:
   - codecov
