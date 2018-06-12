@@ -1,5 +1,5 @@
 import todolist
-from todolistdb import TodoListDB
+from todolist.todolistdb import TodoListDB
 
 db = TodoListDB()
 db.add_category("생활")
