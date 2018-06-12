@@ -431,5 +431,20 @@ def get_print_width(s):
 
 #####################################
 
-main_menu()
+def main():
+    import sys
 
+    argv = sys.argv
+    if 1 < len(argv):
+        if argv[1] == "--version":
+            print(todolist.__version__)
+        elif argv[1] == "--help":
+            print(todolist.__doc__)
+        elif argv[1] == "add":
+            pass
+        elif argv[1] == "list":
+            pass
+    else:
+        main_menu()
+
+        
