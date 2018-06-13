@@ -1,5 +1,19 @@
 __version__ = "0.2.5"
-__doc__ = "
+__doc__ = " 
+	fuctions you can use in mainpage of program :
+		
+	1. add todo: add new contents
+	2. list todo: show contents with filter.
+		      Also, you can manage categories here.
+	3. modify todo: modify contents
+	4. quit : quit the program.
+	
+	and special commands for more imformation:
+		
+	todolist --version: show which version is installed
+	todolist --manual: show full manual with detailed imformation
+"
+__man__ = "
 
                    Open-Source-ToDo-List Manual
 NAME	
@@ -12,7 +26,8 @@ SYNOPSIS
 
 DESCRIPTION
 	
-	The Open-Source-ToDo-List is schedule management tool for CLI environment  made 	of Python3 and uses SQLite3 data base
+	The Open-Source-ToDo-List is schedule management tool for CLI environment  made of Python3 
+	and uses SQLite3 data base
 	
 	In addition, this program has 5 data types.
 
@@ -46,6 +61,12 @@ DESCRIPTION
 		3 : Modify todo :Modify the already recorded contents.
 				 Can change its name, due date and category.
 				Also can determine it’s finished or not.
+				
+				1.modify_contents : get id of data, and modify corresponding data's what and due.
+				2.delete_todo : get id and delete the corresponding data
+				3.mark_as_finished : get id and determine corresponding task is finished or not
+				4.return : go back to previous menu
+				
 	
 		4 : Quit: Quit, Close the Program
 
