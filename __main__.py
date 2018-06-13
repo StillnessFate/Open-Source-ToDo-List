@@ -440,6 +440,8 @@ def main():
             print(todolist.__version__)
         elif argv[1] == "--help":
             print(todolist.__doc__)
+        elif argv[1] == "--manual":
+            print(todolist.__man__)
         elif argv[1] == "add":
             pass
         elif argv[1] == "list":
