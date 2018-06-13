@@ -7,6 +7,7 @@ TODO_LIST_COLUMNS = [
     ("what", "TEXT NOT NULL"),
     ("due", "TEXT NOT NULL"),
     ("category", "TEXT NOT NULL"),
+    ("notes", "TEXT NOT NULL"),
     ("finished", "INTEGER NOT NULL")
 ]
 
@@ -27,21 +28,22 @@ class TodoListDB():
         self.create_table(CATEGORY_TABLE_NAME, CATEGORY_COLUMNS)
 
     # TODO ==============================
-    def add_todo(self, what, due, category=""):
+    def add_todo(self, what, due, category="", notes="", finished=0):
         check_todo = not self.get_todo("what='" + what + "'")
         check_category = (not category) or self.get_category("name='" + category + "'")
         if (not check_todo) or (not check_category):
             return False
 
         query = (
-            "INSERT INTO {0} (what, due, category, finished) VALUES"
-            "('{1}', '{2}', '{3}', '{4}');"
+            "INSERT INTO {0} (what, due, category, notes, finished) VALUES"
+            "('{1}', '{2}', '{3}', '{4}', '{5}');"
         ).format(
             TODO_LIST_TABLE_NAME,
             what,
             due,
             category,
-            0
+            notes,
+            finished
         )
 
         self.cur.execute(query)
