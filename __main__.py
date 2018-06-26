@@ -319,8 +319,8 @@ class TodoView(Frame):
         layout.add_widget(CheckBox("", label="Finished:", name="finished"))
         layout2 = Layout([1, 1, 1, 1])
         self.add_layout(layout2)
-        layout2.add_widget(Button("OK", self._ok), 0)
-        layout2.add_widget(Button("Cancel", self._cancel), 3)
+        layout2.add_widget(Button("Apply", self._apply), 0)
+        layout2.add_widget(Button("Back", self._back), 3)
         self.fix()
 
     def reset(self):
@@ -329,7 +329,7 @@ class TodoView(Frame):
         self._category_ddlist.options = self._model.get_current_categorys()
         self._category_ddlist.value = self.data["category"]
 
-    def _ok(self):
+    def _apply(self):
         self.save()
         if self.data["what"]:
             if (
@@ -346,7 +346,7 @@ class TodoView(Frame):
                 PopUpDialog(self._screen, "Please enter what to do!", ["OK"]))
 
     @staticmethod
-    def _cancel():
+    def _back():
         raise NextScene("Main")
 
 class CategoryView(Frame):
@@ -355,7 +355,7 @@ class CategoryView(Frame):
                                           screen.height * 2 // 3,
                                           screen.width * 2 // 3,
                                           hover_focus=True,
-                                          title="Categorys",
+                                          title="Categories",
                                           reduce_cpu=True)
         self._model = model
 
@@ -524,7 +524,7 @@ def main_loop():
         except ResizeScreenError as e:
             last_scene = e.scene
 
-def cmd_add(argv):
+def cmd_add_todo(argv):
     db = TodoListDB()
     if (len(argv) == 2):
         db.add_todo(argv[0], argv[1])
@@ -535,16 +535,32 @@ def cmd_add(argv):
     elif (len(argv) == 5):
         db.add_todo(argv[0], argv[1], argv[2], argv[3], argv[4])
 
-def cmd_delete(argv):
+def cmd_add_category(argv):
+    db = TodoListDB()
+    if (len(argv) == 1):
+        db.add_category(argv[0])
+
+def cmd_delete_todo(argv):
     db = TodoListDB()
     if (len(argv) == 1):
         db.remove_todo("id=" + argv[0])
 
-def cmd_list():
+def cmd_delete_category(argv):
+    db = TodoListDB()
+    if (len(argv) == 1):
+        db.remove_category("id=" + argv[0])
+
+def cmd_list_todo():
     db = TodoListDB()
     rows = db.get_todo()
     for row in rows:
         print("{0}. {1}, {2}, {3}, {4}".format(row[0], row[1], row[2], row[3], row[4]))
+
+def cmd_list_category():
+    db = TodoListDB()
+    rows = db.get_category()
+    for row in rows:
+        print("{0}. {1}".format(row[0], row[1]))
 
 def main():
     import sys
@@ -555,11 +571,17 @@ def main():
             print(todolist.__version__)
         elif argv[1] == "--help":
             print(todolist.__doc__)
-        elif argv[1] == "--add":
-            cmd_add(argv[2:])
-        elif argv[1] == "--delete":
-            cmd_delete(argv[2:])
-        elif argv[1] == "--list":
-            cmd_list()
+        elif argv[1] == "--add-todo":
+            cmd_add_todo(argv[2:])
+        elif argv[1] == "--add-category":
+            cmd_add_category(argv[2:])
+        elif argv[1] == "--delete-todo":
+            cmd_delete_todo(argv[2:])
+        elif argv[1] == "--delete-category":
+            cmd_delete_category(argv[2:])
+        elif argv[1] == "--list-todo":
+            cmd_list_todo()
+        elif argv[1] == "--list-category":
+            cmd_list_category()
     else:
         main_loop()
