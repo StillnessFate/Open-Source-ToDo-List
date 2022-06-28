@@ -1,4 +1,5 @@
 # Open-Source-ToDo-List
+**※CSE2019(오픈소스SW개발) Team Project**  
 *This is The Open Source CLI To Do List App*
 
 [![Build Status](https://travis-ci.org/StillnessFate/Open-Source-ToDo-List.svg?branch=master)](https://travis-ci.org/StillnessFate/Open-Source-ToDo-List)
